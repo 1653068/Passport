@@ -158,8 +158,8 @@ module.exports = function (passport) {
                                 models.Users
                                     .create({
                                         profileId: profile.id,
-                                        username: profile.username,
-                                        email: profile.emails,
+                                        username: profile.displayName,
+                                        email: profile.emails.value,
                                         TypeId: 2
                                     })
                                     .then((newUser) => {
@@ -213,8 +213,8 @@ module.exports = function (passport) {
                                 models.Users
                                     .create({
                                         profileId: profile.id,
-                                        username: profile.username,
-                                        email: profile.emails,
+                                        username: profile.displayName,
+                                        email: profile.emails.value,
                                         TypeId: 3
                                     })
                                     .then((newUser) => {
