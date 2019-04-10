@@ -160,7 +160,6 @@ module.exports = function (passport) {
                                         profileId: profile.id,
                                         username: profile.username,
                                         email: profile.emails,
-                                        token: accessToken,
                                         TypeId: 2
                                     })
                                     .then((newUser) => {
