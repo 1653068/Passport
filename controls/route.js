@@ -88,7 +88,9 @@ module.exports = function (app, passport) {
     // Google ==============================
     // =====================================
     app.get('/auth/google',
-        passport.authenticate('google'));
+        passport.authenticate('google', {
+            scope: ['profile']
+        }));
 
     app.get('/auth/google/callback',
         passport.authenticate('google', {
