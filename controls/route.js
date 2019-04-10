@@ -78,10 +78,12 @@ module.exports = function (app, passport) {
 
     app.get('/auth/facebook/callback',
         passport.authenticate('facebook', {
-            successRedirect: '/',
-            failureRedirect: '/login',
-            failureFlash: true
-        }));
+            failureRedirect: '/login'
+        }),
+        function (req, res) {
+            // Successful authentication, redirect home.
+            res.redirect('/');
+        });
 
 
     // =====================================
