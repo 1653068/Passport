@@ -159,7 +159,7 @@ module.exports = function (passport) {
                                     .create({
                                         profileId: profile.id,
                                         username: profile.displayName,
-                                        email: profile.emails.value,
+                                        email: profile.emails[0].value,
                                         TypeId: 2
                                     })
                                     .then((newUser) => {
@@ -214,7 +214,7 @@ module.exports = function (passport) {
                                     .create({
                                         profileId: profile.id,
                                         username: profile.displayName,
-                                        email: profile.emails.value,
+                                        email: profile.emails[0].value,
                                         TypeId: 3
                                     })
                                     .then((newUser) => {
