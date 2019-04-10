@@ -153,7 +153,7 @@ module.exports = function (passport) {
                         })
                         .then((user) => {
                             if (user) {
-                                done(null, user);
+                                return done(null, user);
                             } else {
                                 models.Users
                                     .create({
@@ -172,6 +172,7 @@ module.exports = function (passport) {
                             }
                         })
                         .catch((err) => {
+                            console.log(err);
                             done(err, null);
                         })
                 })
