@@ -132,7 +132,7 @@ module.exports = function (passport) {
     // FACEBOOK LOGIN =============================================================
     // =========================================================================
 
-    passport.use('facebook', new FacebookStrategy({
+    passport.use(new FacebookStrategy({
             clientID: "815492051940425",
             clientSecret: "0c33095220d8191409c8af9991014f82",
             callbackURL: "https://bigphuc.herokuapp.com/auth/facebook/callback"
@@ -186,7 +186,7 @@ module.exports = function (passport) {
     // =========================================================================
     // GOOGLE LOGIN =============================================================
     // =========================================================================
-    passport.use('google', new GoogleStrategy({
+    passport.use(new GoogleStrategy({
             clientID: "566277698832-25ohemquilbrppk7io9euf8ab5912nku.apps.googleusercontent.com",
             clientSecret: "mCTbqp_JMKx0sp6YvkgWi80D",
             callbackURL: "https://bigphuc.herokuapp.com/auth/google/callback"
