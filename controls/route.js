@@ -1,4 +1,5 @@
 module.exports = function (app, passport) {
+    var models=require('../models');
     app.get('/sync', (req, res) => {
         models.sequelize.sync().then(() => {
             res.send('Database sync complete!');
@@ -19,7 +20,7 @@ module.exports = function (app, passport) {
     app.get('/login', (req, res) => {
 
         // render the page and pass in any flash data if it exists
-        res.render('login.ejs', {
+        res.render('index', {
             message: req.flash('loginMessage')
         });
     });

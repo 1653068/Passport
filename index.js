@@ -1,7 +1,6 @@
 var express = require("express");
 var app = express();
 let hbs = require('express-handlebars');
-var models=require('./models');
 
 var passport = require('passport');
 var flash    = require('connect-flash');
