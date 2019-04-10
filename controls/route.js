@@ -76,12 +76,14 @@ module.exports = function (app, passport) {
     app.get('/auth/facebook',
         passport.authenticate('facebook'));
 
-    app.post('/auth/facebook/callback',
+    app.get('/auth/facebook/callback',
         passport.authenticate('facebook', {
-            successRedirect: '/profileFacebook',
-            failureRedirect: '/login',
-            failureFlash: true
-        }));
+            failureRedirect: '/login'
+        }),
+        function (req, res) {
+            // Successful authentication, redirect home.
+            res.redirect('/');
+        });
 
 
     // =====================================
