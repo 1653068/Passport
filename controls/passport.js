@@ -140,47 +140,11 @@ module.exports = function (passport) {
         },
         function (accessToken, refreshToken, profile, done) {
             models.Users
-                .findAll({
-                    where: {
-                        TypeId: 2
-                    }
-                })
-                .then((facebookUser) => {
-                    facebookUser
-                        .findOne({
-                            where: {
-                                profileId: profile.id
-                            }
-                        })
-                        .then((user) => {
-                            if (user) {
-                                return done(null, user);
-                            } else {
-                                models.Users
-                                    .create({
-                                        profileId: profile.id,
-                                        username: profile.displayName,
-                                        email: profile.email,
-                                        TypeId: 2
-                                    })
-                                    .then((newUser) => {
-                                        done(null, newUser);
-                                    })
-                                    .catch((error) => {
-                                        console.log(error);
-                                        done(error, null);
-                                    });
-                            }
-                        })
-                        .catch((err) => {
-                            console.log(err);
-                            done(err, null);
-                        })
-                })
-                .catch((err) => {
-                    done(err, null);
+                .findOrCreate({
+                    profileId: profile.id
+                }, function (err, user) {
+                    return done(err, user);
                 });
-
 
         }
     ));
@@ -196,7 +160,7 @@ module.exports = function (passport) {
         function (accessToken, refreshToken, profile, done) {
             models.Users
                 .findOrCreate({
-                    googleId: profile.id
+                    profileId: profile.id
                 }, function (err, user) {
                     return done(err, user);
                 });
