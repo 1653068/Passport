@@ -1,5 +1,8 @@
 // load all the things we need
 var LocalStrategy = require('passport-local').Strategy;
+var FacebookStrategy = require('passport-facebook').Strategy;
+var TwitterStrategy = require('passport-twitter').Strategy;
+var GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 // load up the user model
 var models = require('../models');
@@ -125,5 +128,110 @@ module.exports = function (passport) {
                 });
         }));
 
+    // =========================================================================
+    // FACEBOOK LOGIN =============================================================
+    // =========================================================================
 
+    passport.use('facebook', new FacebookStrategy({
+            clientID: '341549079806182',
+            clientSecret: '83cdf3b14bb0baa2a53e50789e792e34',
+            callbackURL: "http://localhost:5000/auth/facebook/callback"
+        },
+        function (accessToken, refreshToken, profile, done) {
+            models.Users
+                .findAll({
+                    where: {
+                        TypeId: 2
+                    }
+                })
+                .then((facebookUser) => {
+                    facebookUser
+                        .findOne({
+                            where: {
+                                profileId: profile.id
+                            }
+                        })
+                        .then((user) => {
+                            if (user) {
+                                done(null, user);
+                            } else {
+                                models.Users
+                                    .create({
+                                        profileId: profile.id,
+                                        username: profile.username,
+                                        email: profile.emails,
+                                        TypeId: 2
+                                    })
+                                    .then((newUser) => {
+                                        done(null, newUser);
+                                    })
+                                    .catch((error) => {
+                                        console.log(error);
+                                        done(error, null);
+                                    });
+                            }
+                        })
+                        .catch((err) => {
+                            done(err, null);
+                        })
+                })
+                .catch((err) => {
+                    done(err, null);
+                });
+
+
+        }
+    ));
+
+    // =========================================================================
+    // GOOGLE LOGIN =============================================================
+    // =========================================================================
+    passport.use('google', new GoogleStrategy({
+            clientID: '566277698832-25ohemquilbrppk7io9euf8ab5912nku.apps.googleusercontent.com',
+            clientSecret: "HtOcQ7gQjXlwf4MoK3Xr6EmK",
+            callbackURL: "http://localhost:5000/auth/google/callback"
+        },
+        function (accessToken, refreshToken, profile, done) {
+            models.Users
+                .findAll({
+                    where: {
+                        TypeId: 3
+                    }
+                })
+                .then((googleUser) => {
+                    googleUser
+                        .findOne({
+                            where: {
+                                profileId: profile.id
+                            }
+                        })
+                        .then((user) => {
+                            if (user) {
+                                done(null, user);
+                            } else {
+                                models.Users
+                                    .create({
+                                        profileId: profile.id,
+                                        username: profile.username,
+                                        email: profile.emails,
+                                        TypeId: 3
+                                    })
+                                    .then((newUser) => {
+                                        done(null, newUser);
+                                    })
+                                    .catch((error) => {
+                                        console.log(error);
+                                        done(error, null);
+                                    });
+                            }
+                        })
+                        .catch((err) => {
+                            done(err, null);
+                        })
+                })
+                .catch((err) => {
+                    done(err, null);
+                });
+        }
+    ));
 };

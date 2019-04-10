@@ -70,7 +70,32 @@ module.exports = function (app, passport) {
         failureFlash: true // allow flash messages
     }));
 
+    // =====================================
+    // Facebook ==============================
+    // =====================================
+    app.get('/auth/facebook',
+        passport.authenticate('facebook'));
 
+    app.get('/auth/facebook/callback',
+        passport.authenticate('facebook', {
+            successRedirect: '/profile',
+            failureRedirect: '/login',
+            failureFlash: true
+        }));
+
+
+    // =====================================
+    // Google ==============================
+    // =====================================
+    app.get('/auth/google',
+        passport.authenticate('google'));
+
+    app.get('/auth/google/callback',
+        passport.authenticate('google', {
+            successRedirect: '/profile',
+            failureRedirect: '/login',
+            failureFlash: true
+        }));
 
     // =====================================
     // PROFILE SECTION =====================
