@@ -191,7 +191,8 @@ module.exports = function (passport) {
     passport.use(new GoogleStrategy({
             clientID: "566277698832-25ohemquilbrppk7io9euf8ab5912nku.apps.googleusercontent.com",
             clientSecret: "mCTbqp_JMKx0sp6YvkgWi80D",
-            callbackURL: "https://bigphuc.herokuapp.com/auth/google/callback"
+            callbackURL: "https://bigphuc.herokuapp.com/auth/google/callback",
+            profileFields: ['profileId', 'username', 'email']
         },
         function (accessToken, refreshToken, profile, done) {
             models.Users
@@ -213,9 +214,9 @@ module.exports = function (passport) {
                             } else {
                                 models.Users
                                     .create({
-                                        profileId: profile.id,
-                                        username: profile.displayName,
-                                        email: profile.emails[0].value,
+                                        profileId: profile.profileId,
+                                        username: profile.username,
+                                        email: profile.email,
                                         TypeId: 3
                                     })
                                     .then((newUser) => {
