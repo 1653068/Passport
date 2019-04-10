@@ -135,7 +135,7 @@ module.exports = function (passport) {
     passport.use('facebook', new FacebookStrategy({
             clientID: '341549079806182',
             clientSecret: '83cdf3b14bb0baa2a53e50789e792e34',
-            callbackURL: "http://localhost:5000/auth/facebook/callback"
+            callbackURL: "https://bigphuc.herokuapp.com/auth/facebook/callback"
         },
         function (accessToken, refreshToken, profile, done) {
             models.Users
@@ -189,7 +189,7 @@ module.exports = function (passport) {
     passport.use('google', new GoogleStrategy({
             clientID: '566277698832-25ohemquilbrppk7io9euf8ab5912nku.apps.googleusercontent.com',
             clientSecret: "HtOcQ7gQjXlwf4MoK3Xr6EmK",
-            callbackURL: "http://localhost:5000/auth/google/callback"
+            callbackURL: "https://bigphuc.herokuapp.com/auth/google/callback"
         },
         function (accessToken, refreshToken, profile, done) {
             models.Users
