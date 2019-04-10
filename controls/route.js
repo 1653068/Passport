@@ -73,21 +73,24 @@ module.exports = function (app, passport) {
     // =====================================
     // Facebook ==============================
     // =====================================
-    app.get('/auth/facebook', passport.authenticate('facebook'));
+    app.get('/auth/facebook',
+        passport.authenticate('facebook'));
 
-    app.get('/auth/facebook/callback', passport.authenticate('facebook', {
-        successRedirect: '/profile', // redirect to the secure profile section
-        failureRedirect: '/signup', // redirect back to the signup page if there is an error
-        failureFlash: true // allow flash messages
-    }));
+    app.get('/auth/facebook/callback',
+        passport.authenticate('facebook', {
+            successRedirect: '/profile',
+            failureRedirect: '/login',
+            failureFlash: true
+        }));
 
 
     // =====================================
     // Google ==============================
     // =====================================
-    app.get('/auth/google', passport.authenticate('google', {
-        scope: ['profile']
-    }));
+    app.get('/auth/google',
+        passport.authenticate('google', {
+            scope: ['profile']
+        }));
 
     app.get('/auth/google/callback',
         passport.authenticate('google', {

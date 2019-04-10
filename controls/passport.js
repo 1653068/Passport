@@ -132,7 +132,7 @@ module.exports = function (passport) {
     // FACEBOOK LOGIN =============================================================
     // =========================================================================
 
-    passport.use(new FacebookStrategy({
+    passport.use('facebook', new FacebookStrategy({
             clientID: "815492051940425",
             clientSecret: "0c33095220d8191409c8af9991014f82",
             callbackURL: "https://bigphuc.herokuapp.com/auth/facebook/callback"
@@ -178,13 +178,15 @@ module.exports = function (passport) {
                 .catch((err) => {
                     done(err, null);
                 });
+
+
         }
     ));
 
     // =========================================================================
     // GOOGLE LOGIN =============================================================
     // =========================================================================
-    passport.use(new GoogleStrategy({
+    passport.use('google', new GoogleStrategy({
             clientID: "566277698832-25ohemquilbrppk7io9euf8ab5912nku.apps.googleusercontent.com",
             clientSecret: "mCTbqp_JMKx0sp6YvkgWi80D",
             callbackURL: "https://bigphuc.herokuapp.com/auth/google/callback"
