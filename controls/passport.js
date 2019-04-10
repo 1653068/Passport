@@ -136,7 +136,7 @@ module.exports = function (passport) {
             clientID: "815492051940425",
             clientSecret: "0c33095220d8191409c8af9991014f82",
             callbackURL: "https://bigphuc.herokuapp.com/auth/facebook/callback",
-            profileFields: ['profileId', 'username', 'email']
+            profileFields: ['id', 'displayName', 'email']
         },
         function (accessToken, refreshToken, profile, done) {
             models.Users
@@ -158,8 +158,8 @@ module.exports = function (passport) {
                             } else {
                                 models.Users
                                     .create({
-                                        profileId: profile.profileId,
-                                        username: profile.username,
+                                        profileId: profile.id,
+                                        username: profile.displayName,
                                         email: profile.email,
                                         TypeId: 2
                                     })
@@ -191,49 +191,14 @@ module.exports = function (passport) {
     passport.use(new GoogleStrategy({
             clientID: "566277698832-25ohemquilbrppk7io9euf8ab5912nku.apps.googleusercontent.com",
             clientSecret: "mCTbqp_JMKx0sp6YvkgWi80D",
-            callbackURL: "https://bigphuc.herokuapp.com/auth/google/callback",
-            profileFields: ['profileId', 'username', 'email']
+            callbackURL: "https://bigphuc.herokuapp.com/auth/google/callback"
         },
         function (accessToken, refreshToken, profile, done) {
             models.Users
-                .findAll({
-                    where: {
-                        TypeId: 3
-                    }
-                })
-                .then((googleUser) => {
-                    googleUser
-                        .findOne({
-                            where: {
-                                profileId: profile.id
-                            }
-                        })
-                        .then((user) => {
-                            if (user) {
-                                done(null, user);
-                            } else {
-                                models.Users
-                                    .create({
-                                        profileId: profile.profileId,
-                                        username: profile.username,
-                                        email: profile.email,
-                                        TypeId: 3
-                                    })
-                                    .then((newUser) => {
-                                        done(null, newUser);
-                                    })
-                                    .catch((error) => {
-                                        console.log(error);
-                                        done(error, null);
-                                    });
-                            }
-                        })
-                        .catch((err) => {
-                            done(err, null);
-                        })
-                })
-                .catch((err) => {
-                    done(err, null);
+                .findOrCreate({
+                    googleId: profile.id
+                }, function (err, user) {
+                    return done(err, user);
                 });
         }
     ));
