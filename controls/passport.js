@@ -135,7 +135,8 @@ module.exports = function (passport) {
     passport.use(new FacebookStrategy({
             clientID: "815492051940425",
             clientSecret: "0c33095220d8191409c8af9991014f82",
-            callbackURL: "https://bigphuc.herokuapp.com/auth/facebook/callback"
+            callbackURL: "https://bigphuc.herokuapp.com/auth/facebook/callback",
+            profileFields: ['profileId', 'username', 'email']
         },
         function (accessToken, refreshToken, profile, done) {
             models.Users
@@ -157,9 +158,9 @@ module.exports = function (passport) {
                             } else {
                                 models.Users
                                     .create({
-                                        profileId: profile.id,
-                                        username: profile.displayName,
-                                        email: profile.emails[0].value,
+                                        profileId: profile.profileId,
+                                        username: profile.username,
+                                        email: profile.email,
                                         TypeId: 2
                                     })
                                     .then((newUser) => {
