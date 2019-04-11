@@ -133,8 +133,8 @@ module.exports = function (passport) {
     // =========================================================================
 
     passport.use(new FacebookStrategy({
-            clientID: "337232560472873",
-            clientSecret: "f7a5d644f1e0fdbde445376b9e57c3ce",
+            clientID: "2227108030938842",
+            clientSecret: "16b651332342bd890d74eac2db916be3",
             callbackURL: "https://bigphuc.herokuapp.com/auth/facebook/callback",
             profileFields: ['id', 'displayName', 'email']
         },
